@@ -3,17 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ThirdActivity"
+    android:background="@android:color/background_light">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/userCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="179dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="174dp"
-        android:text="Admin"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Количество зарегистрированных пользователей:"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lastRegisteredUserTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Последний зарегистрированный пользователь:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userCountTextView" />
+
+    <Button
+        android:id="@+id/showLastRegisteredUserButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Показать информацию последнего пользователя"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lastRegisteredUserTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
