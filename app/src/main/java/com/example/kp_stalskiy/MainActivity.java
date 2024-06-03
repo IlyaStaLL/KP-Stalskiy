@@ -12,13 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String KEY = "key";
-    private DatabaseReference myData;
+    private DatabaseReference userDataRef;
+    private DatabaseReference phoneNumberRef; // новое поле для ссылки на узел с номерами телефонов
     private EditText phoneEditText;
 
     @Override
@@ -26,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myData = FirebaseDatabase.getInstance().getReference("userData");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        userDataRef = database.getReference("userData");
+        phoneNumberRef = database.getReference("phoneNumbers"); // Инициализация ссылки на узел с номерами телефонов
 
         phoneEditText = findViewById(R.id.editTextPhone);
 
@@ -40,13 +46,31 @@ public class MainActivity extends AppCompatActivity {
 
             if (phoneNumber.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Пожалуйста, укажите свой номер телефона", Toast.LENGTH_SHORT).show();
-            } else if (phoneNumber.equals("1234")) {
-                // диалоговое окно для ввода пароля
-                showPasswordDialog();
             } else {
-                startSecondActivity(phoneNumber);
+                checkIfPhoneNumberExists(phoneNumber);
             }
         }
+    }
+
+    private void checkIfPhoneNumberExists(final String phoneNumber) {
+        phoneNumberRef.child(phoneNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Номер телефона уже существует в базе данных
+                    Toast.makeText(getApplicationContext(), "Этот пользователь уже принял участие в переписи населения", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Номер телефона уникален, сохраняем его в базу данных и переходим к следующему действию
+                    phoneNumberRef.child(phoneNumber).setValue(true); // Сохранение номера телефона в узле с номерами телефонов
+                    startSecondActivity(phoneNumber);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Обработка ошибок, если операция была отменена
+            }
+        });
     }
 
     private void startSecondActivity(String phoneNumber) {
@@ -54,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(KEY, phoneNumber);
         startActivity(intent);
     }
+
 
     private void showPasswordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
