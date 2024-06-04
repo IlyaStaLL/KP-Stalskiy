@@ -1,6 +1,7 @@
 package com.example.kp_stalskiy;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +63,7 @@ public class SecondActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isFullNameValid()) {
                     saveUserDataToDatabase();
+                    showConfirmationDialog();
                 }
             }
         });
@@ -93,6 +95,7 @@ public class SecondActivity extends AppCompatActivity {
         userDataRef.child(phoneNumber).child("gender").setValue(selectedGender);
 
         Toast.makeText(this, "Информация сохранена в базе данных", Toast.LENGTH_SHORT).show();
+
     }
 
     private void showCountrySelectionDialog() {
@@ -138,6 +141,30 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
         builder.setNegativeButton("Отмена", null);
+        builder.show();
+    }
+    private void showConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Хотите передать данные родственника?");
+        builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Возвращаемся на первую активность
+                Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(SecondActivity.this, "Спасибо за участие в переписи!", Toast.LENGTH_SHORT).show();
+                // Возвращаемся на первую активность
+                Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
         builder.show();
     }
 }
