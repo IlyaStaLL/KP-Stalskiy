@@ -1,62 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
-    <EditText
-        android:id="@+id/populationEditText"
+    <TextView
+        android:id="@+id/textViewInitialPopulation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Население"
-        app:layout_constraintBottom_toTopOf="@+id/calculateButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.133" />
+        android:text="Исходное население"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"/>
 
     <EditText
-        android:id="@+id/birthRateEditText"
+        android:id="@+id/editTextInitialPopulation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Рождаемость (в %)"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/populationEditText" />
+        android:inputType="number"
+        android:layout_below="@id/textViewInitialPopulation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/textViewGrowthRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Скорость роста (в %)"
+        android:textSize="20sp"
+        android:layout_below="@id/editTextInitialPopulation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/deathRateEditText"
+        android:id="@+id/editTextGrowthRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="Смертность (в %)"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/birthRateEditText" />
+        android:inputType="numberDecimal"
+        android:layout_below="@id/textViewGrowthRate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/textViewYears"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Количество лет"
+        android:textSize="20sp"
+        android:layout_below="@id/editTextGrowthRate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/editTextYears"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_below="@id/textViewYears"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/calculateButton"
+        android:id="@+id/buttonCalculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Рассчитать"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_below="@id/editTextYears"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
     <TextView
-        android:id="@+id/resultsTextView"
+        android:id="@+id/textViewResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Результаты демографических расчетов"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.466" />
+        android:text="Результат вычислений"
+        android:textSize="20sp"
+        android:layout_below="@id/buttonCalculate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/editTextResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:editable="false"
+        android:layout_below="@id/textViewResult"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/buttonTransferPopulation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Передать численность населения"
+        android:layout_below="@id/editTextResult"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>

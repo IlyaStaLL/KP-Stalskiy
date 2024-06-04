@@ -39,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button button = findViewById(R.id.button);
         button.setOnClickListener(this::onClick);
+        Button buttonCalc = findViewById(R.id.button2);
+        buttonCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCalcActivity();
+            }
+        });
+    }
+    private void openCalcActivity() {
+        Intent intent = new Intent(this, Calc.class);
+        startActivity(intent);
     }
 
     private void onClick(View v) {
